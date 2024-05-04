@@ -3,7 +3,7 @@ import { currentUser } from "@clerk/nextjs"
 import { NextResponse } from "next/server"
 
 import { db } from "@/lib/db"
-import { stripe } from "@/lib/stripe"
+// import { stripe } from "@/lib/stripe"
 
 export async function POST(
 	req: Request,
@@ -64,14 +64,15 @@ export async function POST(
 		})
 
 		if (!stripeCustomer) {
-			const customer = await stripe.customers.create({
-				email: user.emailAddresses[0].emailAddress,
-			})
+			// const customer = await stripe.customers.create({
+			// 	email: user.emailAddresses[0].emailAddress,
+			// })
 
 			stripeCustomer = await db.stripeCustomer.create({
 				data: {
 					userId: user.id,
-					stripeCustomerId: customer.id,
+					stripeCustomerId: user.id,
+					// stripeCustomerId: customer.id,
 				},
 			})
 		}
